@@ -7,8 +7,8 @@ const gestureRecognizer = await GestureRecognizer.createFromOptions(vision, {
   baseOptions: {
     modelAssetPath: "https://storage.googleapis.com/mediapipe-tasks/gesture_recognizer/gesture_recognizer.task"
   },
-  runningMode: Video,
-  numHands: 2
+  runningMode: VIDEO,
+  numHands: 1
 });
 
 await gestureRecognizer.setOptions({ runningMode: "video" });
@@ -35,5 +35,6 @@ const result = gestureRecognizer.recognize(videoElement, startTimeMs);
 const categoryName = result.gestures[0][0].categoryName;
 const categoryScore = result.gestures[0][0].categoryScore;
 const handedness = result.gestures[0][0].handedness;
+//add landmarks
 
 console.log(`Category: ${categoryName}, Score: ${categoryScore}, Handedness: ${handedness}`);
