@@ -1,3 +1,5 @@
+//displays asking user to sign letter and letter from prop
+
 export default function LetterPrompt({letter})
 {
     return(
