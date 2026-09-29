@@ -4,6 +4,8 @@ import {
   handleCorrectMatch
 } from '../game/gameLogic'
 
+import LetterPrompt from '../components/LetterPrompt';
+
 function Practice() {
   const [gameState, setGameState] = useState(initialGameState)
 
@@ -17,9 +19,7 @@ function Practice() {
     <main>
       <h1>ASL Practice</h1>
 
-      <h2>A</h2>
-
-      <p>Sign the letter shown above.</p>
+      <LetterPrompt letter="A" />
 
       <p>Score: {gameState.score}</p>
 
