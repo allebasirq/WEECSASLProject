@@ -5,6 +5,8 @@ import {
 } from '../game/gameLogic'
 
 import LetterPrompt from '../components/LetterPrompt';
+import NavBar from '../components/NavBar';
+
 
 function Practice() {
   const [gameState, setGameState] = useState(initialGameState)
@@ -17,6 +19,8 @@ function Practice() {
 
   return (
     <main>
+      <NavBar/>
+
       <h1>ASL Practice</h1>
 
       <LetterPrompt letter="A" />
