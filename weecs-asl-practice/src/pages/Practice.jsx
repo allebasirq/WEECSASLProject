@@ -6,6 +6,8 @@ import {
 
 import LetterPrompt from '../components/LetterPrompt';
 import NavBar from '../components/NavBar';
+import '../styling/practice.css'
+
 
 
 function Practice() {

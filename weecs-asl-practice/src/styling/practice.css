@@ -1,0 +1,28 @@
+/* NAVIGATION BAR */
+.nav-bar
+{
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+}
+
+/* LINK COLORS and some spacing*/
+.nav-bar a {
+  color: #222;
+  text-decoration: none; /* removes the underline too */
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.nav-bar ul
+{
+    display: flex;
+    list-style-type: none;
+    gap: 10px;
+
+}
+
+/* END NAVIGATION BAR */
