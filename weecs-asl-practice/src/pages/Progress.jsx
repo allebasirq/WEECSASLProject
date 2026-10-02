@@ -2,9 +2,12 @@ import '../styling/progress.css'
 
 function Progress()
 {
-    return(
+   return(
 
+    <main>
+        <NavBar/>
         <h1>test</h1>
+    </main>
 
     );
 }
