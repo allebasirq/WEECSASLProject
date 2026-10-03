@@ -8,6 +8,7 @@ import {
 
 import LetterPrompt from '../components/LetterPrompt';
 import NavBar from '../components/NavBar';
+import Webcam from '../components/Webcam';
 import '../styling/practice.css'
 import ScoreBoard from '../components/ScoreBoard';
 
@@ -45,6 +46,8 @@ function Practice() {
       <h1 className="asl-title">ASL Practice</h1>
 
       <LetterPrompt letter={gameState.currentLetter} />
+
+      <Webcam />
 
       <p>Recognized: {gameState.recognizedLetter ?? 'None'}</p>
       <ScoreBoard score={gameState.score}
