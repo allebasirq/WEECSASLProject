@@ -12,7 +12,7 @@
 }
 
 /* LINK COLORS and some spacing*/
-.nav-bar Link {
+.nav-bar a {
   color: #222;
   text-decoration: none; /* removes the underline too */
   margin-left: 20px;
@@ -27,4 +27,17 @@
 
 }
 
+.bar-link a
+{
+    margin-left: 20px;
+    margin-right: 20px;
+  
+}
+
 /* END NAVIGATION BAR */
+
+/* SCOREBOARD STYLING */
+
+
+
+/* SCOREBOARD STYLING END */
