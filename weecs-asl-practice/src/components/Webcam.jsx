@@ -3,7 +3,8 @@ import {useRef, useState} from 'react'
 function Webcam() {
     const videoRef = useRef(null)
     const canvasRef = useRef(null);
-
+    const streamRef = useRef(null)
+    
     const [cameraStatus, setCameraStatus] = useState('idle')
 
     async function startCamera() {
