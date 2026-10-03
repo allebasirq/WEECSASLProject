@@ -1,5 +1,6 @@
 import '../styling/learn.css'
 import NavBar from '../components/NavBar'
+import LetterCard from '../components/LetterCard'
 
 
 function Learn()
@@ -9,6 +10,8 @@ function Learn()
     <main>
         <NavBar/>
         <h1>LEARN</h1>
+
+        <LetterCard/>
     </main>
 
     );
