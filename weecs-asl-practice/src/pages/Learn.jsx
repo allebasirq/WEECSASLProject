@@ -1,4 +1,6 @@
 import '../styling/learn.css'
+import NavBar from '../components/NavBar'
+
 
 function Learn()
 {
@@ -6,7 +8,7 @@ function Learn()
 
     <main>
         <NavBar/>
-        <h1>test</h1>
+        <h1>LEARN</h1>
     </main>
 
     );

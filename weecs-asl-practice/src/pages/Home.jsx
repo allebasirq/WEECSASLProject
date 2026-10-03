@@ -8,7 +8,7 @@ function Home()
 
     <main>
         <NavBar/>
-        <h1>test</h1>
+        <h1>HOME</h1>
     </main>
 
     );

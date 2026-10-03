@@ -1,4 +1,5 @@
 import '../styling/progress.css'
+import NavBar from '../components/NavBar'
 
 function Progress()
 {
@@ -6,7 +7,7 @@ function Progress()
 
     <main>
         <NavBar/>
-        <h1>test</h1>
+        <h1>PROGRESS</h1>
     </main>
 
     );
