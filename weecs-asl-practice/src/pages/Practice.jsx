@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { loadProgress, saveProgress } from '../game/progressStorage'
 import {
   initialGameState,
   handlePrediction
@@ -10,6 +11,24 @@ import '../styling/practice.css'
 
 function Practice() {
   const [gameState, setGameState] = useState(initialGameState)
+  const [isLoaded, setIsLoaded] = useState(false)
+
+  useEffect(() => {
+    const savedProgress = loadProgress()
+
+    if (savedProgress) {
+      setGameState(savedProgress)
+    }
+
+    setIsLoaded(true)
+  }, [])
+
+
+  useEffect(() => {
+    if (isLoaded) {
+      saveProgress(gameState)
+    }
+  }, [gameState, isLoaded])
 
   function simulatePrediction(letter) {
     setGameState(previousState =>
