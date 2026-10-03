@@ -8,6 +8,7 @@ import {
 import LetterPrompt from '../components/LetterPrompt';
 import NavBar from '../components/NavBar';
 import '../styling/practice.css'
+import ScoreBoard from '../components/ScoreBoard';
 
 function Practice() {
   const [gameState, setGameState] = useState(initialGameState)
@@ -44,17 +45,14 @@ function Practice() {
 
       <LetterPrompt letter={gameState.currentLetter} />
 
-      <p>Score: {gameState.score}</p>
-
-      <p>Streak: {gameState.streak}</p>
-
-      <p>Round: {gameState.currentRound} / {gameState.totalRounds}</p>
-
-      {gameState.roundCompleted && <p>Game Complete!</p>}
-
-      <p>{gameState.feedback}</p>
-
       <p>Recognized: {gameState.recognizedLetter ?? 'None'}</p>
+      <ScoreBoard score={gameState.score}
+      streak={gameState.streak}
+      round={gameState.currentRound}
+      totalRounds={gameState.totalRounds}
+      feedback={gameState.recognizedLetter ?? "None"}
+      roundCompleted={gameState.roundCompleted}
+      />
 
       <button type="button" onClick={() => simulatePrediction('B')}>
         Predict B
