@@ -34,6 +34,28 @@ export function handleCorrectMatch(state) {
   }
 }
 
+export function handleSkip(state) {
+
+  const isFinalRound = state.currentRound === state.totalRounds
+
+  return {
+
+    ...state,
+
+    currentLetter: getNextLetter(state.currentLetter),
+
+    roundCompleted: isFinalRound,
+
+    streak: 0,
+
+    currentRound: isFinalRound
+      ? state.currentRound
+      : state.currentRound + 1,
+
+  }
+
+}
+
 export function handlePrediction(state, predictedLetter) {
   
   const updatedState = {

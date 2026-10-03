@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react'
 import { loadProgress, saveProgress } from '../game/progressStorage'
 import {
   initialGameState,
-  handlePrediction
+  handlePrediction,
+  handleSkip
 } from '../game/gameLogic'
 
 import LetterPrompt from '../components/LetterPrompt';
@@ -84,6 +85,12 @@ function Practice() {
 
       <button type="button" onClick={() => simulatePrediction('Y')}>
         Predict Y
+      </button>
+
+      <button type="button" onClick={() => setGameState(previousState =>
+        handleSkip(previousState)
+      )}>
+        Skip
       </button>
 
     </main>
