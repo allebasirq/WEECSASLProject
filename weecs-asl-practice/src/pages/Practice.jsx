@@ -3,7 +3,12 @@ import { loadProgress, saveProgress } from '../game/progressStorage'
 import {
   initialGameState,
   handlePrediction,
-  handleSkip
+  handleSkip,
+  handleStart,
+  handlePause,
+  handleResume,
+  handleEnd,
+  handleNext
 } from '../game/gameLogic'
 
 import LetterPrompt from '../components/LetterPrompt';
@@ -39,6 +44,36 @@ function Practice() {
     )
   }
 
+  function startGame() {
+  setGameState(previousState =>
+    handleStart(previousState)
+  )
+  }
+
+  function pauseGame() {
+    setGameState(previousState =>
+      handlePause(previousState)
+    )
+  }
+
+  function resumeGame() {
+    setGameState(previousState =>
+      handleResume(previousState)
+    )
+  }
+
+  function endGame() {
+    setGameState(previousState =>
+      handleEnd(previousState)
+    )
+  }
+
+  function nextRound() {
+    setGameState(previousState =>
+      handleNext(previousState)
+    )
+  }
+
   return (
     <main>
       <NavBar/>
@@ -49,7 +84,6 @@ function Practice() {
 
       <Webcam />
 
-      <p>Recognized: {gameState.recognizedLetter ?? 'None'}</p>
       <ScoreBoard score={gameState.score}
       streak={gameState.streak}
       round={gameState.currentRound}
@@ -94,6 +128,26 @@ function Practice() {
         handleSkip(previousState)
       )}>
         Skip
+      </button>
+
+      <button type="button" onClick={startGame}>
+        Start
+      </button>
+
+      <button type="button" onClick={pauseGame}>
+        Pause
+      </button>
+
+      <button type="button" onClick={resumeGame}>
+        Resume
+      </button>
+
+      <button type="button" onClick={endGame}>
+        End
+      </button>
+
+      <button type="button" onClick={nextRound}>
+        Next
       </button>
 
     </main>

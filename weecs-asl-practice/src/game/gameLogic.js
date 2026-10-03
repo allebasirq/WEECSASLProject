@@ -9,7 +9,57 @@ export const initialGameState = {
   currentRound: 1,
   totalRounds: 10,
   correctAnswers: 0,
-  feedback: ''
+  feedback: '',
+  status: 'not_started'
+}
+
+export function handleStart(state) {
+  return {
+    ...state,
+    status: 'active'
+  }
+}
+
+export function handlePause(state) {
+  return {
+    ...state,
+    status: 'paused'
+  }
+}
+
+export function handleResume(state) {
+  return {
+    ...state,
+    status: 'active'
+  }
+}
+
+export function handleEnd(state) {
+  return {
+    ...state,
+    status: 'completed'
+  }
+}
+
+export function handleNext(state) {
+
+  const isFinalRound = state.currentRound === state.totalRounds
+
+  if (isFinalRound) {
+    return {
+      ...state,
+      status: 'completed'
+    }
+  }
+
+  return {
+    ...state,
+    currentLetter: getNextLetter(state.currentLetter),
+    recognizedLetter: null,
+    roundCompleted: false,
+    currentRound: state.currentRound + 1,
+    feedback: ''
+  }
 }
 
 export function getNextLetter(currentLetter) {
@@ -21,15 +71,11 @@ export function getNextLetter(currentLetter) {
 
 export function handleCorrectMatch(state) {
 
-  const isFinalRound = state.currentRound === state.totalRounds
-
   return {
     ...state,
-    currentLetter: getNextLetter(state.currentLetter),
-    roundCompleted: isFinalRound,
+    roundCompleted: true,
     score: state.score + 10,
     streak: state.streak + 1,
-    currentRound: isFinalRound ? state.currentRound : state.currentRound + 1,
     correctAnswers: state.correctAnswers + 1,
   }
 }
