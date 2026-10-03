@@ -1,3 +1,20 @@
+/* WHOLE PAGE */
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background-color: white;
+}
+
+/* TITLE */
+
+.asl-title
+{
+        font-family: Georgia, serif;
+
+}
+
+
 /* NAVIGATION BAR */
 .nav-bar
 {
@@ -13,6 +30,7 @@
 
 /* LINK COLORS and some spacing*/
 .nav-bar a {
+  font-family: Georgia, serif;
   color: #222;
   text-decoration: none; /* removes the underline too */
   margin-left: 20px;
@@ -37,7 +55,11 @@
 /* END NAVIGATION BAR */
 
 /* SCOREBOARD STYLING */
+.scoreboard
+{
+    font-family: Georgia, serif;
 
+}
 
 
 /* SCOREBOARD STYLING END */

@@ -42,7 +42,7 @@ function Practice() {
     <main>
       <NavBar/>
 
-      <h1>ASL Practice</h1>
+      <h1 className="asl-title">ASL Practice</h1>
 
       <LetterPrompt letter={gameState.currentLetter} />
 
