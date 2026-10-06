@@ -1,4 +1,5 @@
 import {useRef, useState} from 'react'
+import { renderLoop } from '../../hand_tracking/hand_test';
 
 function Webcam() {
     const videoRef = useRef(null)
@@ -15,7 +16,15 @@ function Webcam() {
                 video: true,
                 audio: false
             })
-            videoRef.current.srcObject = stream
+            
+            const video = videoRef.current;
+            if(!video) return; // need to make sure video exists
+            video.srcObject = stream;
+
+             // for the hand tracking
+            await video.play();
+            renderLoop(video);
+
             setCameraStatus('active')
         } 
         catch (error) {
