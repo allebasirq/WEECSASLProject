@@ -81,6 +81,7 @@ describe('game logic', () => {
 
     expect(newState.currentRound).toBe(10)
     expect(newState.roundCompleted).toBe(true)
+    expect(newState.status).toBe('completed')
     expect(newState.score).toBe(10)
     expect(newState.correctAnswers).toBe(1)
   })
@@ -96,6 +97,7 @@ describe('game logic', () => {
 
     expect(newState.currentRound).toBe(10)
     expect(newState.roundCompleted).toBe(true)
+    expect(newState.status).toBe('completed')
     expect(newState.score).toBe(0)
     expect(newState.correctAnswers).toBe(0)
   })

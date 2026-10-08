@@ -71,12 +71,17 @@ export function getNextLetter(currentLetter) {
 
 export function handleCorrectMatch(state) {
 
+  const isFinalRound = state.currentRound === state.totalRounds
+
   return {
     ...state,
     roundCompleted: true,
     score: state.score + 10,
     streak: state.streak + 1,
     correctAnswers: state.correctAnswers + 1,
+    status: isFinalRound
+      ? 'completed'
+      : state.status,
   }
 }
 
@@ -98,17 +103,21 @@ export function handleSkip(state) {
       ? state.currentRound
       : state.currentRound + 1,
 
+    status: isFinalRound
+      ? 'completed'
+      : state.status,
+
   }
 
 }
 
 export function handlePrediction(state, predictedLetter) {
-  
+
   const updatedState = {
     ...state,
     recognizedLetter: predictedLetter
   }
-  
+
   if (predictedLetter === state.currentLetter && !state.roundCompleted) {
     return handleCorrectMatch(updatedState)
   }
