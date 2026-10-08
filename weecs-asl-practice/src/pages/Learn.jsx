@@ -5,13 +5,28 @@ import LetterCard from '../components/LetterCard'
 
 function Learn()
 {
+
+    const lettersArr = ['B', 'C'];
+
    return(
 
     <main>
         <NavBar/>
         <h1>LEARN</h1>
 
-        <LetterCard/>
+        <p>click a card to learn more!</p>
+
+        {/* cards for each letter */}
+        <div>
+            {lettersArr.map((currLetter) => (
+                <LetterCard
+                    key={currLetter}
+                    letter={currLetter}
+                />
+            ))}
+        </div>
+        
+
     </main>
 
     );

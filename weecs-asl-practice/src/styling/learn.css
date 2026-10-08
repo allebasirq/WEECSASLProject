@@ -1,1 +1,30 @@
 /* styling for learn page */
+
+.letter-card-container
+{
+    display: flex; 
+}
+
+.letter-card
+{
+    justify-content: center;
+    margin: 20px;
+    padding: 10px;
+    padding-bottom: 50px;
+    background-color: black;
+    border-radius: 10px;
+
+}
+
+#letter-piece
+{
+    color: white;
+}
+
+.letter-card-container img
+{
+    width: 100%;
+    height: 100%;
+    max-width: 200px;
+    max-height: 200;
+}
