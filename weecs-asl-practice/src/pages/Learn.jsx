@@ -6,7 +6,48 @@ import LetterCard from '../components/LetterCard'
 function Learn()
 {
 
-    const lettersArr = ['B', 'C','B', 'C','B', 'C','B', 'C','B', 'C',];
+    const lettersArr = [
+       {
+        letter: "B",
+        practice: true,
+        
+       },
+       {
+        letter: "C",
+        practice: true,
+
+       },
+        {
+        letter: "F",
+        practice: true,
+
+       },  
+       {
+        letter: "I",
+        practice: true,
+
+       },
+       {
+        letter: "L",
+        practice: true,
+
+       },
+       {
+        letter: "O",
+        practice: true,
+
+       },
+       {
+        letter: "V",
+        practice: true,
+
+       },
+       {
+        letter: "Y",
+        practice: true,
+
+       },
+    ];
 
    return(
 
@@ -23,8 +64,8 @@ function Learn()
         <div class="letter-card-container">
             {lettersArr.map((currLetter) => (
                 <LetterCard
-                    key={currLetter}
-                    letter={currLetter}
+                    key={currLetter.letter}
+                    currLetter={currLetter}
                 />
             ))}
         </div>

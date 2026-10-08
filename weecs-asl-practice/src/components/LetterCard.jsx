@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 // letter cards for the learn page 
-export default function LetterCard({letter})
+export default function LetterCard({currLetter})
 {
     const letters = import.meta.glob(
         "../assets/letterimg/*",
@@ -16,6 +16,10 @@ export default function LetterCard({letter})
 
     }   
 
+    const {letter} = currLetter;
+    const {practice} = currLetter;
+
+
     return(
         <div>
             <div class = "letter-learn-card" onClick={() => handleClick(true)}>
@@ -25,9 +29,10 @@ export default function LetterCard({letter})
             {selected && (
                 <div class = "big-card-container">
                     <div class = "letter-big-card" onClick={(e) => e.stopPropagation()}>
-                        <h2>HEKOOO</h2>
                         <button onClick={() => handleClick(false)}> X
-                        </button>   
+                        </button>
+                        <h2>HEKOOO {letter} </h2>
+                        <h2>avialable for practice {practice ? "yes" : "no"} </h2>
                     </div>
                 </div>
             )}

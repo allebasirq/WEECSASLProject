@@ -17,6 +17,8 @@ function Webcam() {
                 audio: false
             })
             
+            streamRef.current = stream; 
+
             const video = videoRef.current;
             if(!video) return; // need to make sure video exists
             video.srcObject = stream;
@@ -63,6 +65,18 @@ function Webcam() {
         ctx.fill();
     }
 
+    function stopCamera() {
+    streamRef.current?.getTracks().forEach((track) => track.stop());
+    streamRef.current = null;
+
+    if (videoRef.current) videoRef.current.srcObject = null;
+
+    const canvas = canvasRef.current;
+    if (canvas) canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+
+    setCameraStatus('idle')
+}
+
     return (
         <div>
             <div className="camera-container">
@@ -79,6 +93,8 @@ function Webcam() {
             <button type = "button" onClick = {startCamera}>
                 Start Camera
             </button>
+
+            <button onClick = {stopCamera}>Stop Camera</button>
         </div>
     )
 }
