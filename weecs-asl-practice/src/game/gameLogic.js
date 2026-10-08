@@ -122,8 +122,6 @@ export function handlePrediction(state, predictedLetter) {
     return handleCorrectMatch(updatedState)
   }
 
-  return {
-    ...updatedState,
-    streak: 0
-  }
+  return updatedState
+
 }

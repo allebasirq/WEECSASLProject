@@ -155,12 +155,12 @@ describe('session controls', () => {
 
   test('handleNext advances to the next round', () => {
     const state = {
-        ...initialGameState,
-        currentLetter: 'C',
-        currentRound: 2,
-        recognizedLetter: 'C',
-        roundCompleted: true,
-        feedback: 'Correct!'
+      ...initialGameState,
+      currentLetter: 'C',
+      currentRound: 2,
+      recognizedLetter: 'C',
+      roundCompleted: true,
+      feedback: 'Correct!'
     }
 
     const result = handleNext(state)
@@ -170,9 +170,9 @@ describe('session controls', () => {
     expect(result.recognizedLetter).toBe(null)
     expect(result.roundCompleted).toBe(false)
     expect(result.feedback).toBe('')
-   })
+  })
 
-    test('handleNext completes the session after the tenth round', () => {
+  test('handleNext completes the session after the tenth round', () => {
     const state = {
       ...initialGameState,
       currentLetter: 'C',
@@ -187,6 +187,18 @@ describe('session controls', () => {
 
     expect(result.currentRound).toBe(10)
     expect(result.status).toBe('completed')
+  })
+
+  test('wrong prediction does not reset the streak', () => {
+    const state = {
+      ...initialGameState,
+      streak: 3,
+      currentLetter: 'C'
+    }
+
+    const newState = handlePrediction(state, 'B')
+
+    expect(newState.streak).toBe(3)
   })
 
 })
