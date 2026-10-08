@@ -1,7 +1,7 @@
 //header with links to pages project title(home), learn, practice, progress
 
-import { Link } from 'react-router-dom'
-
+import { NavLink } from 'react-router-dom'
+import hero from "../assets/hero.png"
 export default function NavBar()
 {
 
@@ -9,11 +9,13 @@ export default function NavBar()
 
         <nav class = "nav-bar">
 
-            <Link id ="bar-title" to="/">Home</Link>
+            <NavLink id ="bar-title" to="/">
+              <img src={hero} alt="Home" className="nav-logo" />
+            </NavLink>
             <div class = "bar-link">
-                <Link  to="/learn">Learn</Link>
-                <Link  to="/practice">Practice</Link>
-                <Link  to="/progress">Progress</Link>
+                <NavLink  to="/learn">Learn</NavLink>
+                <NavLink  to="/practice">Practice</NavLink>
+                <NavLink  to="/progress">Progress</NavLink>
             </div>
 
         </nav>
