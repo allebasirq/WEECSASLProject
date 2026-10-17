@@ -1,4 +1,4 @@
-/* WHOLE PAGE */
+
 
 
 /* TITLE */
@@ -67,12 +67,28 @@
 /* END NAVIGATION BAR */
 
 /* SCOREBOARD STYLING */
-.scoreboard
-{
+.scoreboard {
+    width: 640px;
+    min-height: 150px;
+    background-color: white;
+    color: #222;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 15px auto;
+    padding: 15px 20px;
+    box-sizing: border-box;
+    box-shadow: 0 1px 12px rgba(0, 0, 0, 0.2);
     font-family: Georgia, serif;
-
+    text-align: center;
 }
 
+.scoreboard p {
+    margin: 5px 0;
+    font-size: 20px;
+}
 
 /* SCOREBOARD STYLING END */
 
@@ -85,7 +101,17 @@
     width: 640px;
     max-width: 100%;
     margin: 0 auto;
+
+    /* White border and subtle shadow */
+    border: 15px solid white;
+    border-radius: 12px;
+    box-shadow: 0 1px 20px rgba(0, 0, 0, 0.25);
+
+    /* Clip video to rounded corners */
+    overflow: hidden;
+    box-sizing: border-box;
 }
+
 
 .camera-container video {
     display: block;
@@ -102,4 +128,93 @@
     height: 100%;
     pointer-events: none;
     transform: scaleX(-1)
+}
+
+/* WEBCAM STYLING END */
+
+
+
+/* BLUE BUTTON STYLING */
+button {
+    background-color: #4562ab;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 14px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+/* Slightly darker blue when hovering */
+button:hover {
+    background-color: #244085;
+}
+
+/* Buttons while being clicked */
+button:active {
+    background-color: #254292;
+}
+
+
+/* START AND STOP CAMERA BUTTONS */
+.camera-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+  margin: 10px 0;
+}
+
+.camera-controls button {
+  padding: 10px 20px;
+  font-size: 18px;
+  border-radius: 8px;
+  min-width: 150px;
+  box-shadow: 0 1px 15px rgba(0, 0, 0, 0.25);
+}
+
+/* LETTER PROMPT SQUARE BACKGROUND */
+.letter-card {
+    width: 300px;
+    min-height: 100px;
+    background-color: white;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+    padding: 15px;
+    box-sizing: border-box;
+    box-shadow: 0 1px 20px rgba(0, 0, 0, 0.25);
+    text-align: center;
+}
+
+/* MAKE THE LETTER B BIGGER */
+#letter-display {
+    font-size: 50px;
+    margin: 0 0 10px 0;
+}
+
+/* STYLE THE INSTRUCTIONS */
+.letter-card p {
+    font-size: 19px;
+    margin: 0;
+}
+
+/* CAMERA STATUS CARD */
+.camera-status {
+    width: 200px;
+    min-height: 25px;
+    background-color: white;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 15px auto;
+    padding: 8px;
+    box-sizing: border-box;
+    box-shadow: 0 1px 12px rgba(0, 0, 0, 0.2);
+    font-size: 15px;
+    font-family: Georgia, serif;
 }

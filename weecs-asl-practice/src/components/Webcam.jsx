@@ -109,24 +109,36 @@ function Webcam() {
 }
 
     return (
-        <div>
-            <div className="camera-container">
-                <video ref = {videoRef} autoPlay playsInline onLoadedMetadata={() => {
-                    resizeCanvas(); 
-                    }} 
-                />
+    <div>
+      <div className="camera-container">
+        <video
+          ref={videoRef}
+          autoPlay
+          playsInline
+          onLoadedMetadata={() => {
+            resizeCanvas()
+            drawTestDot()
+          }}
+        />
 
-                <canvas ref={canvasRef} />
-            </div>
+        <canvas ref={canvasRef} />
+      </div>
 
-            <p>Camera status: {cameraStatus}</p>
-            <button type = "button" onClick = {startCamera}>
-                Start Camera
-            </button>
+      <p className="camera-status">
+        Camera status: {cameraStatus}
+    </p>
 
-            <button onClick = {stopCamera}>Stop Camera</button>
-        </div>
-    )
+      <div className="camera-controls">
+        <button type="button" onClick={startCamera}>
+          Start Camera
+        </button>
+
+        <button type="button" onClick={stopCamera}>
+          Stop Camera
+        </button>
+      </div>
+    </div>
+  )
 }
 
 export default Webcam
