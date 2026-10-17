@@ -1,4 +1,4 @@
-import {useRef, useState, useEffect} from 'react'
+import {useRef, useState, useEffect, useCallback} from 'react'
 import { renderLoop } from '../../hand_tracking/hand_test';
 
 function Webcam() {
@@ -7,12 +7,6 @@ function Webcam() {
     const streamRef = useRef(null)
     
     const [cameraStatus, setCameraStatus] = useState('idle')
-
-    useEffect(() => {
-        return () => {
-            stopCamera();
-        };
-    }, []);
 
     async function startCamera() {
         setCameraStatus('starting')
@@ -71,7 +65,7 @@ function Webcam() {
         ctx.fill();
     }
 
-    function stopCamera() {
+    const stopCamera = useCallback(() => {
     streamRef.current?.getTracks().forEach((track) => track.stop());
     streamRef.current = null;
 
@@ -81,7 +75,13 @@ function Webcam() {
     if (canvas) canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
 
     setCameraStatus('idle')
-}
+}, []);
+
+    useEffect(() => {
+        return () => {
+            stopCamera();
+        };
+    }, [stopCamera]);
 
     return (
         <div>
