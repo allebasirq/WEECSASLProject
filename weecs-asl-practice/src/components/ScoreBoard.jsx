@@ -8,7 +8,7 @@ function ScoreBoard({
   roundCompleted
 }) {
   return (
-    <div class="scoreboard">
+    <div className="scoreboard">
       <p>Score: {score}</p>
 
       <p>Streak: {streak}</p>

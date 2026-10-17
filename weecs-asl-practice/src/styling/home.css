@@ -24,6 +24,13 @@ body
     background: rgb(225, 236, 255);
     border: 2px solid rgb(182, 191, 248);
 
+    width: 100%;
+    max-width: 900px;
+    min-height: 100vh;
+    margin: 2rem auto 0;
+    padding: 2rem;
+    box-sizing: border-box;
+
 
 }
 #home-title
@@ -32,8 +39,7 @@ body
 }
 
 .image-box {
-  width: 250px;
-  height: 250px;
+  
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -46,6 +52,8 @@ body
 .image-box img {
   max-width: 100%;
   max-height: 100%;
+  width: 250px;
+  height: 250px;
   object-fit: contain;
   border-radius: 10px;
   animation: fade 6s ease;
