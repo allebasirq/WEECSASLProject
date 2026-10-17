@@ -3,6 +3,7 @@ import { renderLoop } from '../../hand_tracking/hand_test';
 import {DrawingUtils, HandLandmarker} from '@mediapipe/tasks-vision';
 
 function Webcam() {
+    const trackingRef = useRef(false); // to track if the hand tracking is running
     const videoRef = useRef(null)
     const canvasRef = useRef(null);
     const streamRef = useRef(null)
@@ -32,7 +33,10 @@ function Webcam() {
 
              // for the hand tracking
             await video.play();
-            renderLoop(video, drawHandLandmarks); // pass the drawHandLandmarks function as the onResults callback
+
+            trackingRef.current = true; // set the tracking to true 
+            
+            renderLoop(video, drawHandLandmarks, () => trackingRef.current); // pass the drawHandLandmarks function as the onResults callback
 
             setCameraStatus('active')
         } 
@@ -73,15 +77,14 @@ function Webcam() {
     }
 
     function drawHandLandmarks(result) {
-        console.log("Landmarks received", result.lanmarks);
-        
+
         const canvas = canvasRef.current;
 
         if(!canvas) return;
 
         const ctx = canvas.getContext('2d');
 
-        // Clear the previous fram'es drawings
+        // Clear the previous frames drawings
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         const drawingUtils = new DrawingUtils(ctx);
@@ -94,6 +97,7 @@ function Webcam() {
     }
 
     function stopCamera() {
+    trackingRef.current = false;
     streamRef.current?.getTracks().forEach((track) => track.stop());
     streamRef.current = null;
 
