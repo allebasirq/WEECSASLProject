@@ -1,4 +1,4 @@
-import {useRef, useState} from 'react'
+import {useRef, useState, useEffect} from 'react'
 import { renderLoop } from '../../hand_tracking/hand_test';
 import {DrawingUtils, HandLandmarker} from '@mediapipe/tasks-vision';
 
@@ -8,6 +8,12 @@ function Webcam() {
     const streamRef = useRef(null)
     
     const [cameraStatus, setCameraStatus] = useState('idle')
+
+    useEffect(() => {
+        return () => {
+            stopCamera();
+        };
+    }, []);
 
     async function startCamera() {
         setCameraStatus('starting')
