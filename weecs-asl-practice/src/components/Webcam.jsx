@@ -41,7 +41,6 @@ function Webcam() {
             setCameraStatus('error')
         }
     }
-}
 
     function resizeCanvas() {
         const video = videoRef.current;
@@ -74,6 +73,8 @@ function Webcam() {
     }
 
     function drawHandLandmarks(result) {
+        console.log("Landmarks received", result.lanmarks);
+        
         const canvas = canvasRef.current;
 
         if(!canvas) return;
@@ -89,6 +90,7 @@ function Webcam() {
         for (const landmarks of result.landmarks ??[]) {
             drawingUtils.drawConnectors(landmarks, HandLandmarker.HAND_CONNECTIONS, {color: 'green', lineWidth: 3});
             drawingUtils.drawLandmarks(landmarks, {color: 'red', radius: 4});
+        }
     }
 
     function stopCamera() {
@@ -96,7 +98,6 @@ function Webcam() {
     streamRef.current = null;
 
     if (videoRef.current) videoRef.current.srcObject = null;
-
     const canvas = canvasRef.current;
     if (canvas) canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
 
@@ -107,8 +108,7 @@ function Webcam() {
         <div>
             <div className="camera-container">
                 <video ref = {videoRef} autoPlay playsInline onLoadedMetadata={() => {
-                    resizeCanvas();
-                    drawTestDot(); 
+                    resizeCanvas(); 
                     }} 
                 />
 
