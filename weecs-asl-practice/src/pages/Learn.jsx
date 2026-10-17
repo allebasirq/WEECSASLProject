@@ -148,6 +148,7 @@ function Learn()
     // function goNext() {
     //     setnextLetter((i) => (i + 1) % letterList.length);
     // }
+    
 
    return(
 
@@ -166,6 +167,7 @@ function Learn()
                 <LetterCard
                     key={currLetter.letter}
                     currLetter={currLetter}
+                    lettersArray={lettersArr}
                 />
             ))}
         </div>
