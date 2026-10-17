@@ -1,5 +1,7 @@
 import { FilesetResolver, GestureRecognizer } from '@mediapipe/tasks-vision'
 
+import modelAssetUrl from './models/gesture_recognizer_rps.task?url';
+
 // Create task for image file processing:
 const vision = await FilesetResolver.forVisionTasks(
   // path/to/wasm/root
@@ -10,7 +12,7 @@ const vision = await FilesetResolver.forVisionTasks(
 // Gesture Recognizer, base settings, non-customized model
 const gestureRecognizer = await GestureRecognizer.createFromOptions(vision, {
   baseOptions: {
-    modelAssetPath: "https://storage.googleapis.com/mediapipe-tasks/gesture_recognizer/gesture_recognizer.task" // need to replace with custom model
+    modelAssetPath: modelAssetUrl // need to replace with custom model
   },
   runningMode: "VIDEO",
   numHands: 1
@@ -59,6 +61,10 @@ export function processResult(result) {
   const categoryName = gesture.categoryName;
   const categoryScore = (gesture.score * 100).toFixed(2); // from the demo
   const handedness = hand.displayName;
+
+  // Name: (none = not a recognized sign, empty = hand is missing)
+  const resultObject = {categoryName, categoryScore, handedness, timestamp};
+  const resultString = JSON.stringify(resultObject);
 
   // Log the category name, score, and handedness
   console.log(`Category: ${categoryName}, Score: ${categoryScore}, Handedness: ${handedness}`);
