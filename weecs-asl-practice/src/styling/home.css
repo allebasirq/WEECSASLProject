@@ -1,4 +1,64 @@
 /* styling for home page */
+body
+{
+    background: #fff5f5;
+    font-family: Chalkboard SE;
+    background-color: #fff5f8;
+  background-image: repeating-linear-gradient(
+    #f7f5f6 0 2px,       /* line */
+    transparent 2px 50px /* gap */
+  );
+
+}
+
+.home-container
+{
+    margin-top: 30px;
+    margin-left: 200px;
+    margin-right: 200px;
+    border-radius: 30px;
+    padding: 50px 1px; 
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background: rgb(225, 236, 255);
+    border: 2px solid rgb(182, 191, 248);
+
+
+}
+#home-title
+{
+        font-family: Chalkboard SE;
+}
+
+.image-box {
+  width: 250px;
+  height: 250px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 30px;
+}
+
+.image-box img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 10px;
+  animation: fade 6s ease;
+
+
+}
+
+@keyframes fade {
+  0%   { opacity: 0; }
+  35%  { opacity: 1; }   
+  65%  { opacity: 1; }   
+  100% { opacity: 0; }
+}
 
 /* TITLE BOX */
 
@@ -6,8 +66,38 @@
 /* DESCRIPTION BOX */
 #description
 {
-    margin-top: 30%;
-    margin-bottom: 30px;
+    margin-top: 30px;
+        font-family: Chalkboard SE;
+
+    
+}
+#description-text
+{
+    width:300px;
+    height:200px;
 }
 
 /* BUTTON STYLING  */
+.home-button
+{
+    background-color: rgb(254, 254, 255);
+    border-radius: 10px;
+    padding: 5px 10px;
+    font-size: 18px;
+    text-decoration: none;
+    border: 2px solid rgb(182, 191, 248);
+    outline: none;
+
+}
+.home-button a
+{
+    color: black;
+    text-decoration: none;
+}
+
+.extra-home
+{
+        font-family: Chalkboard SE;
+    padding:20px;
+    color:rgb(115, 114, 114);
+}

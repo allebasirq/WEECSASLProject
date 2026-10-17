@@ -8,6 +8,11 @@ function Learn()
 
     const lettersArr = [
        {
+        letter: "A",
+        practice: false,
+        
+       },
+       {
         letter: "B",
         practice: true,
         
@@ -17,15 +22,45 @@ function Learn()
         practice: true,
 
        },
+       {
+        letter: "D",
+        practice: false,
+        
+       },
+       {
+        letter: "E",
+        practice: false,
+        
+       },
         {
         letter: "F",
         practice: true,
 
        },  
        {
+        letter: "G",
+        practice: false,
+        
+       },
+       {
+        letter: "H",
+        practice: false,
+        
+       },
+       {
         letter: "I",
-        practice: true,
+        practice: false,
 
+       },
+       {
+        letter: "J",
+        practice: false,
+        
+       },
+       {
+        letter: "K",
+        practice: false,
+        
        },
        {
         letter: "L",
@@ -33,9 +68,49 @@ function Learn()
 
        },
        {
+        letter: "M",
+        practice: false,
+        
+       },
+       {
+        letter: "N",
+        practice: false,
+        
+       },
+       {
         letter: "O",
         practice: true,
 
+       },
+       {
+        letter: "P",
+        practice: false,
+        
+       },
+       {
+        letter: "Q",
+        practice: false,
+        
+       },
+       {
+        letter: "R",
+        practice: false,
+        
+       },
+       {
+        letter: "S",
+        practice: false,
+        
+       },
+       {
+        letter: "T",
+        practice: false,
+        
+       },
+       {
+        letter: "U",
+        practice: false,
+        
        },
        {
         letter: "V",
@@ -43,11 +118,36 @@ function Learn()
 
        },
        {
+        letter: "W",
+        practice: false,
+        
+       },
+       {
+        letter: "X",
+        practice: false,
+        
+       },
+       {
         letter: "Y",
         practice: true,
 
        },
+       {
+        letter: "Z",
+        practice: false,
+        
+       },
     ];
+
+    // const [nextLetter, setnextLetter] = useState(false);
+
+    // function goPrev() {
+    //     setnextLetter((i) => (i - 1 + letterList.length) % letterList.length);
+    // }
+
+    // function goNext() {
+    //     setnextLetter((i) => (i + 1) % letterList.length);
+    // }
 
    return(
 
