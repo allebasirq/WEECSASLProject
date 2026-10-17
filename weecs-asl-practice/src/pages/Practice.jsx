@@ -1,155 +1,163 @@
-import { useState, useEffect } from 'react'
-import { loadProgress, saveProgress } from '../game/progressStorage'
+import { useRef, useState } from 'react'
+import { saveCompletedSession } from '../game/progressStorage'
 import {
-  initialGameState,
+  createSessionResult,
+  handleEnd,
+  handleNext,
+  handlePause,
   handlePrediction,
+  handleResume,
   handleSkip,
   handleStart,
-  handlePause,
-  handleResume,
-  handleEnd,
-  handleNext
+  initialGameState,
+  supportedLetters
 } from '../game/gameLogic'
-
-import LetterPrompt from '../components/LetterPrompt';
-import NavBar from '../components/NavBar';
-import Webcam from '../components/Webcam';
+import { createStablePrediction } from '../game/stablePrediction'
+import LetterPrompt from '../components/LetterPrompt'
+import NavBar from '../components/NavBar'
+import Webcam from '../components/Webcam'
+import ScoreBoard from '../components/ScoreBoard'
 import '../styling/practice.css'
-import ScoreBoard from '../components/ScoreBoard';
+
+function createSessionId() {
+  return globalThis.crypto?.randomUUID?.() ??
+    `session-${Date.now()}-${Math.random().toString(36).slice(2)}`
+}
+
+function readMonotonicTime() {
+  return globalThis.performance.now()
+}
 
 function Practice() {
   const [gameState, setGameState] = useState(initialGameState)
-  const [isLoaded, setIsLoaded] = useState(false)
+  const [storageMessage, setStorageMessage] = useState('')
+  const gameStateRef = useRef(initialGameState)
+  const stablePredictionRef = useRef(createStablePrediction())
+  const mockTimestampRef = useRef(0)
 
-  useEffect(() => {
-    const savedProgress = loadProgress()
+  function updateGameState(update) {
+    const previousState = gameStateRef.current
+    const nextState = update(previousState)
+    if (nextState === previousState) return
 
-    if (savedProgress) {
-      setGameState(savedProgress)
+    gameStateRef.current = nextState
+    setGameState(nextState)
+
+    if (previousState.status !== 'completed' && nextState.status === 'completed') {
+      const result = createSessionResult(nextState, new Date().toISOString())
+      if (result) {
+        const savedProgress = saveCompletedSession(result)
+        setStorageMessage(savedProgress.ok ? '' : savedProgress.error)
+      }
     }
+  }
 
-    setIsLoaded(true)
-  }, [])
+  function processPrediction(letter, timestamp, receivedAt = readMonotonicTime()) {
+    const stableLetter = stablePredictionRef.current.update(letter, timestamp)
+    if (!stableLetter) return
 
-
-  useEffect(() => {
-    if (isLoaded) {
-      saveProgress(gameState)
-    }
-  }, [gameState, isLoaded])
+    updateGameState(previousState =>
+      handlePrediction(
+        previousState,
+        { letter: stableLetter, timestamp, stable: true },
+        receivedAt
+      )
+    )
+  }
 
   function simulatePrediction(letter) {
-    setGameState(previousState =>
-      handlePrediction(previousState, letter)
-    )
+    const timestamp = mockTimestampRef.current + 1
+    mockTimestampRef.current = timestamp + 1000
+    stablePredictionRef.current.reset()
+    processPrediction(letter, timestamp, timestamp)
+    processPrediction(letter, timestamp + 1000, timestamp + 1000)
   }
 
   function startGame() {
-  setGameState(previousState =>
-    handleStart(previousState)
-  )
+    stablePredictionRef.current.reset()
+    setStorageMessage('')
+    const sessionId = createSessionId()
+    updateGameState(previousState => handleStart(previousState, sessionId))
   }
 
   function pauseGame() {
-    setGameState(previousState =>
-      handlePause(previousState)
-    )
+    stablePredictionRef.current.reset()
+    updateGameState(handlePause)
   }
 
   function resumeGame() {
-    setGameState(previousState =>
-      handleResume(previousState)
-    )
+    stablePredictionRef.current.reset()
+    updateGameState(handleResume)
   }
 
   function endGame() {
-    setGameState(previousState =>
-      handleEnd(previousState)
-    )
+    stablePredictionRef.current.reset()
+    updateGameState(handleEnd)
+  }
+
+  function skipRound() {
+    stablePredictionRef.current.reset()
+    updateGameState(handleSkip)
   }
 
   function nextRound() {
-    setGameState(previousState =>
-      handleNext(previousState)
-    )
+    stablePredictionRef.current.reset()
+    updateGameState(handleNext)
   }
 
   return (
     <main>
-      <NavBar/>
-
+      <NavBar />
       <h1 className="asl-title">ASL Practice</h1>
-
       <LetterPrompt letter={gameState.currentLetter} />
-
       <Webcam />
 
-      <ScoreBoard score={gameState.score}
-      streak={gameState.streak}
-      round={gameState.currentRound}
-      totalRounds={gameState.totalRounds}
-      feedback={gameState.recognizedLetter ?? "None"}
-      roundCompleted={gameState.roundCompleted}
+      <ScoreBoard
+        score={gameState.score}
+        streak={gameState.streak}
+        round={gameState.currentRound}
+        totalRounds={gameState.totalRounds}
+        feedback={gameState.recognizedLetter ?? 'None'}
+        roundCompleted={gameState.status === 'completed'}
       />
 
-      <button type="button" onClick={() => simulatePrediction('B')}>
-        Predict B
-      </button>
+      {gameState.status !== 'active' && gameState.status !== 'paused' && (
+        <button type="button" onClick={startGame}>
+          Start
+        </button>
+      )}
+      {gameState.status === 'active' && (
+        <>
+          <button type="button" onClick={pauseGame}>Pause</button>
+          <button type="button" onClick={skipRound}>Skip</button>
+          {gameState.roundCompleted && (
+            <button type="button" onClick={nextRound}>Next</button>
+          )}
+          <button type="button" onClick={endGame}>End</button>
+        </>
+      )}
+      {gameState.status === 'paused' && (
+        <>
+          <button type="button" onClick={resumeGame}>Resume</button>
+          <button type="button" onClick={endGame}>End</button>
+        </>
+      )}
 
-      <button type="button" onClick={() => simulatePrediction('C')}>
-        Predict C
-      </button>
+      <section aria-label="Development prediction controls">
+        <h2>Mock predictions (development only)</h2>
+        {supportedLetters.map(letter => (
+          <button
+            key={letter}
+            type="button"
+            disabled={gameState.status !== 'active' || gameState.roundCompleted}
+            onClick={() => simulatePrediction(letter)}
+          >
+            Predict {letter}
+          </button>
+        ))}
+      </section>
 
-      <button type="button" onClick={() => simulatePrediction('F')}>
-        Predict F
-      </button>
-      
-      <button type="button" onClick={() => simulatePrediction('I')}>
-        Predict I
-      </button>
-
-      <button type="button" onClick={() => simulatePrediction('L')}>
-        Predict L
-      </button>
-
-      <button type="button" onClick={() => simulatePrediction('O')}>
-        Predict O
-      </button>
-
-      <button type="button" onClick={() => simulatePrediction('V')}>
-        Predict V
-      </button>
-
-      <button type="button" onClick={() => simulatePrediction('Y')}>
-        Predict Y
-      </button>
-
-      <button type="button" onClick={() => setGameState(previousState =>
-        handleSkip(previousState)
-      )}>
-        Skip
-      </button>
-
-      <button type="button" onClick={startGame}>
-        Start
-      </button>
-
-      <button type="button" onClick={pauseGame}>
-        Pause
-      </button>
-
-      <button type="button" onClick={resumeGame}>
-        Resume
-      </button>
-
-      <button type="button" onClick={endGame}>
-        End
-      </button>
-
-      <button type="button" onClick={nextRound}>
-        Next
-      </button>
-
+      {storageMessage && <p role="alert">{storageMessage}</p>}
     </main>
   )
 }

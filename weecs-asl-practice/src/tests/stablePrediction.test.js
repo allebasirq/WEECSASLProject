@@ -68,4 +68,16 @@ describe('createStablePrediction', () => {
     expect(stablePrediction.update('L', 2000)).toBe(null);
     expect(stablePrediction.update('L', 3000)).toBe('L');
   });
+
+  it('ignores out-of-order frames and resets on an invalid timestamp', () => {
+    const stablePrediction = createStablePrediction();
+
+    stablePrediction.update('B', 1000);
+    expect(stablePrediction.update('B', 900)).toBe(null);
+    expect(stablePrediction.update('B', 2000)).toBe('B');
+
+    expect(stablePrediction.update('C', Number.NaN)).toBe(null);
+    stablePrediction.update('C', 3000);
+    expect(stablePrediction.update('C', 4000)).toBe('C');
+  });
 });

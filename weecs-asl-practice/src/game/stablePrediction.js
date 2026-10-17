@@ -1,12 +1,24 @@
-const VALID_LETTERS = new Set(['B', 'C', 'F', 'I', 'L', 'O', 'V', 'Y']);
+import { supportedLetters } from './gameLogic'
+
+const VALID_LETTERS = new Set(supportedLetters)
 
 export function createStablePrediction(holdDurationMs = 1000) {
   let currentLetter = null;
   let holdStartTime = null;
+  let lastTimestamp = null;
   let predictionAccepted = false;
 
   function update(predictedLetter, timestamp) {
-    // Normalize the prediction to uppercase.
+    if (!Number.isFinite(timestamp) || timestamp < 0) {
+      reset();
+      return null;
+    }
+
+    if (lastTimestamp !== null && timestamp <= lastTimestamp) {
+      return null;
+    }
+    lastTimestamp = timestamp;
+
     const letter =
       typeof predictedLetter === 'string'
         ? predictedLetter.toUpperCase()
@@ -44,6 +56,7 @@ export function createStablePrediction(holdDurationMs = 1000) {
   function reset() {
     currentLetter = null;
     holdStartTime = null;
+    lastTimestamp = null;
     predictionAccepted = false;
   }
 
