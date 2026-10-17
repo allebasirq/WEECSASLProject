@@ -1,4 +1,4 @@
-import {useRef, useState, useEffect} from 'react'
+import {useRef, useState, useEffect, useCallback} from 'react'
 import { renderLoop } from '../../hand_tracking/hand_test';
 import {DrawingUtils, HandLandmarker} from '@mediapipe/tasks-vision';
 
@@ -9,12 +9,6 @@ function Webcam() {
     const streamRef = useRef(null)
     
     const [cameraStatus, setCameraStatus] = useState('idle')
-
-    useEffect(() => {
-        return () => {
-            stopCamera();
-        };
-    }, []);
 
     async function startCamera() {
         setCameraStatus('starting')
@@ -96,17 +90,27 @@ function Webcam() {
         }
     }
 
-    function stopCamera() {
-    trackingRef.current = false;
-    streamRef.current?.getTracks().forEach((track) => track.stop());
-    streamRef.current = null;
+    const stopCamera = useCallback(() => {
+        trackingRef.current = false;
 
-    if (videoRef.current) videoRef.current.srcObject = null;
+        streamRef.current?.getTracks().forEach((track) => track.stop());
+        streamRef.current = null;
+
+        if (videoRef.current) videoRef.current.srcObject = null;
+
     const canvas = canvasRef.current;
-    if (canvas) canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+    if (canvas) {
+        canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+    }
 
-    setCameraStatus('idle')
-}
+    setCameraStatus('idle');
+    }, []);
+
+        useEffect(() => {
+            return () => {
+                stopCamera();
+            };
+        }, [stopCamera]);
 
     return (
     <div>
