@@ -43,6 +43,7 @@ export default function LetterCard({currLetter, lettersArray})
 
     const {letter} = currentLetter;
     const {practice} = currentLetter;
+    const {message} = currentLetter;
 
 
     return(
@@ -61,13 +62,11 @@ export default function LetterCard({currLetter, lettersArray})
                         <button onClick={() => handleClick(false)}> X
                         </button>
                         <div class="letter-in-card">
-                            <h2>HEKOOO {letter} </h2>
+                            <h2 id = "big-card-letter"> {letter} </h2>
                             <img src={letters[`../assets/letterimg/letter${letter}.png`]}></img>
-                            <h2>avialable for practice {practice ? "yes" : "no"} avialable for practice
-                                avialable for practiceavialable for practiceavialable for practiceavialable for practiceavialable for practiceavialable 
-                                avialable for practice
-                            </h2>
-                            {practice &&  <Button/>}
+                            <h2 class="big-card-description">{message} </h2>
+                            <h2 class="big-card-description">Available for Practice: {practice ? "Yes!" : "No . . ."} </h2>
+                            {practice &&  <Button/>} 
                         </div>
                         
                     </div>
