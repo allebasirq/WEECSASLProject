@@ -1,5 +1,6 @@
 import {useRef, useState} from 'react'
 import { renderLoop } from '../../hand_tracking/hand_test';
+import {DrawingUtils, HandLandmarker} from '@mediapipe/tasks-vision';
 
 function Webcam() {
     const videoRef = useRef(null)
@@ -25,7 +26,7 @@ function Webcam() {
 
              // for the hand tracking
             await video.play();
-            renderLoop(video);
+            renderLoop(video, drawHandLandmarks); // pass the drawHandLandmarks function as the onResults callback
 
             setCameraStatus('active')
         } 
@@ -34,6 +35,7 @@ function Webcam() {
             setCameraStatus('error')
         }
     }
+}
 
     function resizeCanvas() {
         const video = videoRef.current;
@@ -63,6 +65,24 @@ function Webcam() {
 
         ctx.fillStyle = 'red';
         ctx.fill();
+    }
+
+    function drawHandLandmarks(result) {
+        const canvas = canvasRef.current;
+
+        if(!canvas) return;
+
+        const ctx = canvas.getContext('2d');
+
+        // Clear the previous fram'es drawings
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        const drawingUtils = new DrawingUtils(ctx);
+
+        //Draw each detected hand's landmarks and connections
+        for (const landmarks of result.landmarks ??[]) {
+            drawingUtils.drawConnectors(landmarks, HandLandmarker.HAND_CONNECTIONS, {color: 'green', lineWidth: 3});
+            drawingUtils.drawLandmarks(landmarks, {color: 'red', radius: 4});
     }
 
     function stopCamera() {

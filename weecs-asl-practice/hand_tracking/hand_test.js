@@ -22,7 +22,7 @@ let lastVideoTime = -1; // seconds
 let lastTimestamp = 0; // milliseconds
 
 // Render the video, process results each frame
-export function renderLoop(video) {
+export function renderLoop(video, onResults) {
 // const video = document.getElementById("video"); // receive the video
 if(!video) return; // double checking if video exists
 
@@ -30,13 +30,19 @@ if(!video) return; // double checking if video exists
     const timestamp = Math.max(Math.round(performance.now()), lastTimestamp + 1); // current milliseconds (get the max of both just in case)
     const gestureRecognitionResult = gestureRecognizer.recognizeForVideo(video, timestamp); // requires the video and timestamp in milliseconds
     processResult(gestureRecognitionResult);
-    lastVideoTime = video.currentTime; // update seconds
+
+    if (onResults) {
+      onResults(gestureRecognitionResult);
+    }
+
+    lastVideoTime = video.
+    currentTime; // update seconds
     lastTimestamp = timestamp; // update milliseconds
   }
 
   // get the next frame
   requestAnimationFrame(() => {
-    renderLoop(video);
+    renderLoop(video, onResults);
   });
 }
 
