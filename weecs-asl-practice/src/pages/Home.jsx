@@ -43,6 +43,7 @@ function Home()
                     alt={`ASL sign for ${letters[flash].name}`}
                 />
             </div>
+            <p id="home-stars">✦✦✦</p>
             <p id="description-text">[namename] can help you learn ASL in a fun and immersive way. 
                 Click learn and check out various tips and tricks to signing the alphabet.
                 Hit the practice button once you feel ready to test yourself.
