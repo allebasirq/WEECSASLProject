@@ -1,16 +1,31 @@
-# React + Vite
+# WEECS ASL Practice
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A browser-based prototype for practicing selected American Sign Language fingerspelling letters. The current practice session uses ten rounds, awards 10 points for a correct recognized letter, and awards zero points while resetting the streak for a skipped round.
 
-Currently, two official plugins are available:
+## Run locally
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Requirements: Node.js and npm.
 
-## React Compiler
+```sh
+npm install
+npm run dev
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Open the local URL printed by Vite. To run the automated tests and production build:
 
-## Expanding the ESLint configuration
+```sh
+npm run test -- --run
+npm run build
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Practice and saved progress
+
+Practice prompts use the supported-letter set defined in `src/game/gameLogic.js`. Predictions are accepted only while a session is active, only when marked stable, and only when the event timestamp is recent and newer than the last accepted event. Paused, completed, loading, error, missing, unsupported, duplicate, and stale predictions cannot award points.
+
+Completed sessions are saved in the browser under the `aslPracticeProgress` localStorage key. The Progress page lists results and can reset this application’s saved history; it does not clear unrelated browser storage. Incomplete sessions and webcam media are not saved. If browser storage is unavailable or contains invalid data, the app reports the issue and practice logic remains usable.
+
+The prediction controls on the Practice page are development mocks. Real camera-model prediction delivery still requires integration with the hand-tracking component.
+
+## Limitations
+
+This is a learning prototype, not a complete ASL course or authoritative assessment of signing ability. It practices selected static letters only and does not recognize words or sentences.

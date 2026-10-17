@@ -1,1 +1,33 @@
-/* styling for progress page */
+.progress-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding-bottom: 2rem;
+}
+
+.progress-page > h1,
+.progress-page > p,
+.progress-page > button,
+.progress-page > div {
+  margin: 1.5rem;
+}
+
+.progress-sessions {
+  display: grid;
+  gap: 1rem;
+  list-style: none;
+  padding: 0 1.5rem;
+}
+
+.progress-sessions li {
+  border: 2px solid #b1bffd;
+  border-radius: 0.75rem;
+  padding: 1rem 1.5rem;
+}
+
+.progress-sessions h2 {
+  margin-top: 0;
+}
+
+.progress-page button {
+  margin-right: 0.75rem;
+}

@@ -5,7 +5,7 @@ body {
     margin: 0;
     min-height: 100vh;
     background-color: white;
-    font-family: Georgia, serif;
+
 }
 
 /* LEARN PAGE TITLE SECTION */
@@ -13,12 +13,14 @@ body {
 {   
     gap: 100px;
     margin-bottom: 30px;
+    
 }
 
 .learn-title h1
 {
     margin-top: 50px;
     margin-bottom: 50px;
+    font-family: Chalkboard SE;
 
 }
 
@@ -44,7 +46,7 @@ body {
     padding-bottom: 50px;
     background-color: black;
     border-radius: 10px;
-    border: 5px solid #1e0c6d;
+    border: 5px solid #353535;
     box-sizing: border-box;
     max-width: 100%;
     width: 100%;
@@ -113,5 +115,72 @@ body {
     background-color: rgb(5, 3, 47);
     margin-top: 20px;
     margin-right: 20px;
+
+}
+
+
+.learn-nav-button
+{
+    margin:10px;
+    max-width: 40px;
+    max-height: 80px;
+    width:100%;
+    height:100%;
+    background: none;
+    border: none;
+    padding: 0px;
+    cursor: pointer;
+    border-radius: 10px;
+    margin-bottom: 40px;
+
+}
+
+.learn-nav-button img
+{
+   display: block;            
+  image-rendering: pixelated;
+}
+
+.letter-in-card
+{
+    justify-content: center;
+    margin-left: 20px;
+}
+
+.letter-in-card h2
+{
+    font-family: Chalkboard SE;
+}
+
+.letter-in-card button
+{
+    margin-top: 30px;
+    font-family: Chalkboard SE;
+    padding: 5px 10px;
+    cursor: pointer;
+    text-decoration: none;
+    outline: none;
+    margin-left: 10px;
+
+}
+
+.letter-in-card button a
+{
+    text-decoration: none;
+    color: white;
+
+}
+
+.letter-in-card img
+{
+    max-width: 75px;
+    max-height: 150px;
+
+    width: 100%;
+    height: 100%;
+    border-radius: 30px;
+    border: 1px solid black;
+    margin-bottom: 5px;
+    margin-top: 5px;
 
 }

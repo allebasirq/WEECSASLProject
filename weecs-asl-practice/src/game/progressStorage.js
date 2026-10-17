@@ -1,52 +1,76 @@
 const PROGRESS_KEY = 'aslPracticeProgress'
 
-export function saveProgress(session) {
-    try {
+function isValidSession(session) {
+  return Boolean(
+    session &&
+    typeof session.sessionId === 'string' &&
+    session.sessionId.length > 0 &&
+    typeof session.completedAt === 'string' &&
+    Number.isFinite(Date.parse(session.completedAt)) &&
+    Number.isInteger(session.score) &&
+    session.score >= 0 &&
+    Number.isInteger(session.totalRounds) &&
+    session.totalRounds > 0 &&
+    Number.isInteger(session.correctAnswers) &&
+    session.correctAnswers >= 0 &&
+    session.correctAnswers <= session.totalRounds &&
+    Number.isInteger(session.roundsCompleted) &&
+    session.roundsCompleted >= session.correctAnswers &&
+    session.roundsCompleted <= session.totalRounds
+  )
+}
 
-        localStorage.setItem(
-            PROGRESS_KEY,
-            JSON.stringify(session)
-        )
+function readSessions() {
+  const savedProgress = localStorage.getItem(PROGRESS_KEY)
+  if (savedProgress === null) return { ok: true, sessions: [] }
 
-        return true
+  const parsedProgress = JSON.parse(savedProgress)
+  if (
+    !parsedProgress ||
+    parsedProgress.version !== 1 ||
+    !Array.isArray(parsedProgress.sessions) ||
+    !parsedProgress.sessions.every(isValidSession)
+  ) {
+    return { ok: false, sessions: [], error: 'Saved progress has an invalid format.' }
+  }
 
-    } catch {
-        return false
-    }
+  return { ok: true, sessions: parsedProgress.sessions }
 }
 
 export function loadProgress() {
-
   try {
-
-    const savedProgress = localStorage.getItem(PROGRESS_KEY)
-
-    if (savedProgress === null) {
-
-      return null
-
-    }
-
-    return JSON.parse(savedProgress)
-
+    return readSessions()
   } catch {
-    return null
+    return { ok: false, sessions: [], error: 'Saved progress could not be read.' }
+  }
+}
+
+export function saveCompletedSession(session) {
+  if (!isValidSession(session)) {
+    return { ok: false, sessions: [], error: 'The completed session is invalid and was not saved.' }
   }
 
+  try {
+    const currentProgress = readSessions()
+    if (!currentProgress.ok) return currentProgress
+
+    if (currentProgress.sessions.some(({ sessionId }) => sessionId === session.sessionId)) {
+      return currentProgress
+    }
+
+    const sessions = [session, ...currentProgress.sessions]
+    localStorage.setItem(PROGRESS_KEY, JSON.stringify({ version: 1, sessions }))
+    return { ok: true, sessions }
+  } catch {
+    return { ok: false, sessions: [], error: 'Saved progress could not be written.' }
+  }
 }
 
 export function resetProgress() {
-
   try {
-
     localStorage.removeItem(PROGRESS_KEY)
-
-    return true
-
+    return { ok: true, sessions: [] }
   } catch {
-
-    return false
-
+    return { ok: false, sessions: [], error: 'Saved progress could not be reset.' }
   }
-
 }
