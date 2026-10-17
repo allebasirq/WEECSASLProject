@@ -47,6 +47,9 @@ body
   border-radius: 16px;
   overflow: hidden;
   margin-bottom: 30px;
+    border-radius: 400px;
+
+
 }
 
 .image-box img {
@@ -55,8 +58,8 @@ body
   width: 250px;
   height: 250px;
   object-fit: contain;
-  border-radius: 10px;
   animation: fade 6s ease;
+
 
 
 }
@@ -108,4 +111,9 @@ body
         font-family: Chalkboard SE;
     padding:20px;
     color:rgb(115, 114, 114);
+}
+
+#home-stars
+{
+  color: white;
 }
