@@ -33,7 +33,6 @@ function Practice() {
   const [storageMessage, setStorageMessage] = useState('')
   const gameStateRef = useRef(initialGameState)
   const stablePredictionRef = useRef(createStablePrediction())
-  const mockTimestampRef = useRef(0)
 
   function updateGameState(update) {
     const previousState = gameStateRef.current
@@ -66,11 +65,11 @@ function Practice() {
   }
 
   function simulatePrediction(letter) {
-    const timestamp = mockTimestampRef.current + 1
-    mockTimestampRef.current = timestamp + 1000
+    const lastPredictionTimestamp = gameStateRef.current.lastPredictionTimestamp ?? -1
+    const timestamp = Math.max(readMonotonicTime(), lastPredictionTimestamp + 1, 1000)
     stablePredictionRef.current.reset()
+    processPrediction(letter, timestamp - 1000, timestamp - 1000)
     processPrediction(letter, timestamp, timestamp)
-    processPrediction(letter, timestamp + 1000, timestamp + 1000)
   }
 
   function startGame() {
@@ -110,7 +109,9 @@ function Practice() {
       <NavBar />
       <h1 className="asl-title">ASL Practice</h1>
       <LetterPrompt letter={gameState.currentLetter} />
-      <Webcam />
+      <Webcam
+        onPrediction={({ letter, timestamp }) => processPrediction(letter, timestamp)}
+      />
 
       <ScoreBoard
         score={gameState.score}
@@ -142,20 +143,6 @@ function Practice() {
           <button type="button" onClick={endGame}>End</button>
         </>
       )}
-
-      <section aria-label="Development prediction controls">
-        <h2>Mock predictions (development only)</h2>
-        {supportedLetters.map(letter => (
-          <button
-            key={letter}
-            type="button"
-            disabled={gameState.status !== 'active' || gameState.roundCompleted}
-            onClick={() => simulatePrediction(letter)}
-          >
-            Predict {letter}
-          </button>
-        ))}
-      </section>
 
       {storageMessage && <p role="alert">{storageMessage}</p>}
     </main>

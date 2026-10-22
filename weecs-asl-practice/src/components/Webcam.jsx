@@ -1,8 +1,9 @@
 import {useRef, useState, useEffect, useCallback} from 'react'
 import { renderLoop } from '../../hand_tracking/hand_test';
 import {DrawingUtils, HandLandmarker} from '@mediapipe/tasks-vision';
+import { createPredictionEvent } from '../../hand_tracking/predictionContract'
 
-function Webcam() {
+function Webcam({ onPrediction }) {
     const trackingRef = useRef(false); // to track if the hand tracking is running
     const videoRef = useRef(null)
     const canvasRef = useRef(null);
@@ -30,7 +31,10 @@ function Webcam() {
 
             trackingRef.current = true; // set the tracking to true 
             
-            renderLoop(video, drawHandLandmarks, () => trackingRef.current); // pass the drawHandLandmarks function as the onResults callback
+            renderLoop(video, (result) => {
+              drawHandLandmarks(result)
+              onPrediction?.(createPredictionEvent(result, performance.now()))
+            }, () => trackingRef.current)
 
             setCameraStatus('active')
         } 
