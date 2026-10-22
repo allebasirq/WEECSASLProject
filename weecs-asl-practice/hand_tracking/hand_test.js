@@ -1,6 +1,6 @@
 import { FilesetResolver, GestureRecognizer } from '@mediapipe/tasks-vision'
 
-import modelAssetUrl from './models/gesture_recognizer.task?url';
+import modelAssetUrl from './models/gesture_recognizer_ASL.task?url';
 
 // Create task for image file processing:
 const vision = await FilesetResolver.forVisionTasks(
@@ -58,7 +58,9 @@ export function processResult(result, timestamp) {
   // if there is no gesture or hand recognized, return nothing (failsafe)
   if (!gesture || !hand) return;
 
-  const categoryName = gesture.categoryName;
+  var categoryName = gesture.categoryName;
+  if (categoryName == "")
+    categoryName = "none";
   const categoryScore = (gesture.score * 100).toFixed(2); // from the demo
   const handedness = hand.displayName;
 
