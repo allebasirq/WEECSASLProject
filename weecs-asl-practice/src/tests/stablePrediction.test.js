@@ -40,11 +40,13 @@ describe('createStablePrediction', () => {
     expect(stablePrediction.update('B', 1700)).toBe('B');
   });
 
-  it('does not accept unsupported letters', () => {
+  it('accepts newly supported letters and rejects excluded letters', () => {
     const stablePrediction = createStablePrediction();
 
     expect(stablePrediction.update('A', 0)).toBe(null);
-    expect(stablePrediction.update('A', 1500)).toBe(null);
+    expect(stablePrediction.update('A', 1000)).toBe('A');
+    expect(stablePrediction.update('P', 1500)).toBe(null);
+    expect(stablePrediction.update('P', 2500)).toBe(null);
   });
 
   it('accepts a held letter only once', () => {

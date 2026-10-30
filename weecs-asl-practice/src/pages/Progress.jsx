@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import NavBar from '../components/NavBar'
+import { POINTS_PER_CORRECT_ANSWER } from '../game/gameLogic'
 import { loadProgress, resetProgress } from '../game/progressStorage'
 import '../styling/progress.css'
 
@@ -32,7 +33,9 @@ function Progress() {
                   <p>
                     Completed: {new Date(session.completedAt).toLocaleString()}
                   </p>
-                  <p>Score: {session.score} / {session.totalRounds * 10}</p>
+                  <p>
+                    Score: {session.score} / {session.totalRounds * POINTS_PER_CORRECT_ANSWER}
+                  </p>
                   <p>
                     Correct: {session.correctAnswers} of {session.totalRounds}
                   </p>

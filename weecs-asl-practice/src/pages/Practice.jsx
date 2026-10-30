@@ -9,8 +9,7 @@ import {
   handleResume,
   handleSkip,
   handleStart,
-  initialGameState,
-  supportedLetters
+  initialGameState
 } from '../game/gameLogic'
 import { createStablePrediction } from '../game/stablePrediction'
 import LetterPrompt from '../components/LetterPrompt'

@@ -1,5 +1,6 @@
 import { describe, expect, test } from 'vitest'
 import {
+  createRoundLetters,
   createSessionResult,
   handleEnd,
   handleNext,
@@ -10,6 +11,7 @@ import {
   handleStart,
   initialGameState,
   MAX_PREDICTION_AGE_MS,
+  POINTS_PER_CORRECT_ANSWER,
   supportedLetters
 } from '../game/gameLogic'
 
@@ -26,6 +28,18 @@ describe('game logic', () => {
     expect(state.sessionId).toBe('session-1')
     expect(state.score).toBe(0)
     expect(state.currentRound).toBe(1)
+    expect(state.currentLetter).toBe(state.roundLetters[0])
+    expect(state.roundLetters).toHaveLength(state.totalRounds)
+    expect(new Set(state.roundLetters).size).toBe(state.totalRounds)
+  })
+
+  test('selects ten distinct supported letters in randomized order', () => {
+    const roundLetters = createRoundLetters(() => 0)
+
+    expect(roundLetters).toHaveLength(10)
+    expect(new Set(roundLetters).size).toBe(10)
+    expect(roundLetters.every(letter => supportedLetters.includes(letter))).toBe(true)
+    expect(roundLetters).not.toEqual(supportedLetters.slice(0, 10))
   })
 
   test('does not restart an active or paused session', () => {
@@ -34,8 +48,8 @@ describe('game logic', () => {
   })
 
   test('only a stable correct prediction in an active round scores once', () => {
-    const result = handlePrediction(activeState, prediction('B'), 1000)
-    expect(result.score).toBe(10)
+    const result = handlePrediction(activeState, prediction(activeState.currentLetter), 1000)
+    expect(result.score).toBe(POINTS_PER_CORRECT_ANSWER)
     expect(result.streak).toBe(1)
     expect(result.correctAnswers).toBe(1)
     expect(result.roundsCompleted).toBe(1)
@@ -47,17 +61,18 @@ describe('game logic', () => {
   test('does not score before start, while paused, or after completion', () => {
     const paused = handlePause(activeState)
     const completed = handleEnd(activeState)
+    const currentLetterPrediction = prediction(activeState.currentLetter)
 
-    expect(handlePrediction(initialGameState, prediction('B'), 1000).score).toBe(0)
-    expect(handlePrediction(paused, prediction('B'), 1000)).toBe(paused)
-    expect(handlePrediction(completed, prediction('B'), 1000)).toBe(completed)
-    expect(handlePrediction({ ...activeState, status: 'loading' }, prediction('B'), 1000).score).toBe(0)
-    expect(handlePrediction({ ...activeState, status: 'error' }, prediction('B'), 1000).score).toBe(0)
+    expect(handlePrediction(initialGameState, currentLetterPrediction, 1000).score).toBe(0)
+    expect(handlePrediction(paused, currentLetterPrediction, 1000)).toBe(paused)
+    expect(handlePrediction(completed, currentLetterPrediction, 1000)).toBe(completed)
+    expect(handlePrediction({ ...activeState, status: 'loading' }, currentLetterPrediction, 1000).score).toBe(0)
+    expect(handlePrediction({ ...activeState, status: 'error' }, currentLetterPrediction, 1000).score).toBe(0)
   })
 
   test('does not score unstable, unsupported, or missing-hand predictions', () => {
     expect(handlePrediction(activeState, prediction('B', 1000, false), 1000)).toBe(activeState)
-    expect(handlePrediction(activeState, prediction('A'), 1000)).toBe(activeState)
+    expect(handlePrediction(activeState, prediction('P'), 1000)).toBe(activeState)
     expect(handlePrediction(activeState, prediction(null), 1000)).toBe(activeState)
   })
 
@@ -71,8 +86,9 @@ describe('game logic', () => {
   })
 
   test('records a fresh wrong prediction without changing score', () => {
-    const result = handlePrediction(activeState, prediction('C'), 1000)
-    expect(result.recognizedLetter).toBe('C')
+    const wrongLetter = supportedLetters.find(letter => letter !== activeState.currentLetter)
+    const result = handlePrediction(activeState, prediction(wrongLetter), 1000)
+    expect(result.recognizedLetter).toBe(wrongLetter)
     expect(result.score).toBe(0)
     expect(result.streak).toBe(0)
   })
@@ -84,7 +100,7 @@ describe('game logic', () => {
     expect(result.score).toBe(0)
     expect(result.streak).toBe(0)
     expect(result.currentRound).toBe(2)
-    expect(result.currentLetter).toBe('C')
+    expect(result.currentLetter).toBe(state.roundLetters[1])
     expect(result.roundsCompleted).toBe(1)
   })
 
@@ -96,11 +112,11 @@ describe('game logic', () => {
   })
 
   test('next advances only after a scored round', () => {
-    const result = handlePrediction(activeState, prediction('B'), 1000)
+    const result = handlePrediction(activeState, prediction(activeState.currentLetter), 1000)
     const next = handleNext(result)
 
     expect(next.currentRound).toBe(2)
-    expect(next.currentLetter).toBe('C')
+    expect(next.currentLetter).toBe(activeState.roundLetters[1])
     expect(next.roundCompleted).toBe(false)
     expect(next.recognizedLetter).toBe(null)
     expect(handleNext(activeState)).toBe(activeState)
@@ -114,7 +130,7 @@ describe('game logic', () => {
     expect(skipped.status).toBe('completed')
     expect(skipped.currentRound).toBe(10)
     expect(answered.status).toBe('completed')
-    expect(answered.score).toBe(10)
+    expect(answered.score).toBe(POINTS_PER_CORRECT_ANSWER)
   })
 
   test('pause and resume clear the previous prediction timestamp', () => {
@@ -124,16 +140,16 @@ describe('game logic', () => {
   })
 
   test('ending a session preserves its results and prevents further actions', () => {
-    const earnedPoints = handlePrediction(activeState, prediction('B'), 1000)
+    const earnedPoints = handlePrediction(activeState, prediction(activeState.currentLetter), 1000)
     const ended = handleEnd(earnedPoints)
 
     expect(ended.status).toBe('completed')
-    expect(ended.score).toBe(10)
+    expect(ended.score).toBe(POINTS_PER_CORRECT_ANSWER)
     expect(handleSkip(ended)).toBe(ended)
     expect(createSessionResult(ended, '2026-10-17T12:00:00.000Z')).toEqual({
       sessionId: 'session-1',
       completedAt: '2026-10-17T12:00:00.000Z',
-      score: 10,
+      score: POINTS_PER_CORRECT_ANSWER,
       correctAnswers: 1,
       totalRounds: 10,
       roundsCompleted: 1
@@ -145,7 +161,10 @@ describe('game logic', () => {
   })
 
   test('the session prompt list uses only supported letters', () => {
-    expect(supportedLetters).toEqual(['B', 'C', 'F', 'I', 'L', 'O', 'V', 'Y'])
+    expect(supportedLetters).toEqual([
+      'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
+      'L', 'M', 'N', 'O', 'Q', 'R', 'T', 'V', 'W', 'X', 'Y'
+    ])
   })
 })
 

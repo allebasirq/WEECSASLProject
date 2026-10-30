@@ -1,4 +1,6 @@
 //score, streak (optional), feedback, round you're on
+import { POINTS_PER_CORRECT_ANSWER } from '../game/gameLogic'
+
 function ScoreBoard({
   score,
   streak,
@@ -9,7 +11,7 @@ function ScoreBoard({
 }) {
   return (
     <div className="scoreboard">
-      <p>Score: {score}</p>
+      <p>Score: {score} / {totalRounds * POINTS_PER_CORRECT_ANSWER}</p>
 
       <p>Streak: {streak}</p>
 

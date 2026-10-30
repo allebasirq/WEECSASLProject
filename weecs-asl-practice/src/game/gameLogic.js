@@ -1,9 +1,14 @@
-export const supportedLetters = ['B', 'C', 'F', 'I', 'L', 'O', 'V', 'Y']
+export const supportedLetters = [
+  'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
+  'L', 'M', 'N', 'O', 'Q', 'R', 'T', 'V', 'W', 'X', 'Y'
+]
 export const MAX_PREDICTION_AGE_MS = 1000
+export const POINTS_PER_CORRECT_ANSWER = 10
 
 export const initialGameState = {
   sessionId: null,
-  currentLetter: 'B',
+  currentLetter: 'A',
+  roundLetters: [],
   recognizedLetter: null,
   lastPredictionTimestamp: null,
   roundCompleted: false,
@@ -17,13 +22,30 @@ export const initialGameState = {
   status: 'not_started'
 }
 
-export function handleStart(state, sessionId) {
+export function createRoundLetters(random = Math.random) {
+  const shuffledLetters = [...supportedLetters]
+
+  for (let index = shuffledLetters.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(random() * (index + 1))
+    const letter = shuffledLetters[index]
+    shuffledLetters[index] = shuffledLetters[swapIndex]
+    shuffledLetters[swapIndex] = letter
+  }
+
+  return shuffledLetters.slice(0, initialGameState.totalRounds)
+}
+
+export function handleStart(state, sessionId, random = Math.random) {
   if (state.status === 'active' || state.status === 'paused') {
     return state
   }
 
+  const roundLetters = createRoundLetters(random)
+
   return {
     ...initialGameState,
+    currentLetter: roundLetters[0],
+    roundLetters,
     sessionId,
     status: 'active'
   }
@@ -71,18 +93,13 @@ export function handleNext(state) {
 
   return {
     ...state,
-    currentLetter: getNextLetter(state.currentLetter),
+    currentLetter: state.roundLetters[state.currentRound],
     recognizedLetter: null,
     lastPredictionTimestamp: null,
     roundCompleted: false,
     currentRound: state.currentRound + 1,
     feedback: ''
   }
-}
-
-export function getNextLetter(currentLetter) {
-  const currentIndex = supportedLetters.indexOf(currentLetter)
-  return supportedLetters[(currentIndex + 1) % supportedLetters.length]
 }
 
 export function handleCorrectMatch(state) {
@@ -92,7 +109,7 @@ export function handleCorrectMatch(state) {
     ...state,
     roundCompleted: true,
     roundsCompleted: state.roundsCompleted + 1,
-    score: state.score + 10,
+    score: state.score + POINTS_PER_CORRECT_ANSWER,
     streak: state.streak + 1,
     correctAnswers: state.correctAnswers + 1,
     status: isFinalRound ? 'completed' : state.status
@@ -106,7 +123,9 @@ export function handleSkip(state) {
 
   return {
     ...state,
-    currentLetter: isFinalRound ? state.currentLetter : getNextLetter(state.currentLetter),
+    currentLetter: isFinalRound
+      ? state.currentLetter
+      : state.roundLetters[state.currentRound],
     recognizedLetter: null,
     lastPredictionTimestamp: null,
     roundCompleted: isFinalRound,
