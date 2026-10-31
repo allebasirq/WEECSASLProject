@@ -54,8 +54,9 @@ function Home()
             <Button/>
 
         </div>
-        </div>
         <p class="extra-home">Duolingo but better.</p>
+        </div>
+        
     </main>
 
     );

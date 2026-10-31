@@ -16,13 +16,12 @@ body
     margin-top: 30px;
     margin-left: 200px;
     margin-right: 200px;
-    border-radius: 30px;
     padding: 50px 1px; 
     display: flex;
     align-items: center;
     flex-direction: column;
     background: rgb(225, 236, 255);
-    border: 2px solid rgb(182, 191, 248);
+    box-shadow: 0 1px 20px rgba(0, 0, 0, 0.25);
 
     width: 100%;
     max-width: 900px;
@@ -30,6 +29,7 @@ body
     margin: 2rem auto 0;
     padding: 2rem;
     box-sizing: border-box;
+    
 
 
 }
@@ -92,12 +92,13 @@ body
 .home-button
 {
     background-color: rgb(254, 254, 255);
-    border-radius: 10px;
-    padding: 5px 10px;
-    font-size: 18px;
+     padding: 15px 35px;
+    font-size: 22px;
+    font-family: Chalkboard SE;
     text-decoration: none;
-    border: 2px solid rgb(182, 191, 248);
     outline: none;
+    box-shadow: 0 1px 15px rgba(0, 0, 0, 0.15);
+    border-radius: 15px;
 
 }
 .home-button a
@@ -111,6 +112,7 @@ body
         font-family: Chalkboard SE;
     padding:20px;
     color:rgb(115, 114, 114);
+    
 }
 
 #home-stars
