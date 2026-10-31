@@ -72,6 +72,4 @@ export function processResult(result, timestamp) {
   //console.log(resultString); // test
   console.log(`Category: ${categoryName}, Score: ${categoryScore}, Handedness: ${handedness}`);
 
-  // Draw landmarks
-  
 }
