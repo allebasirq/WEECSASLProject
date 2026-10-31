@@ -9,7 +9,7 @@ function Learn()
     const lettersArr = [
        {
         letter: "A",
-        practice: false,
+        practice: true,
         message: "Closed fist, thumb rests beside the curled index finger. Keep the thumb visible instead of hiding it behind the fingers.",
        },
        {
@@ -25,13 +25,13 @@ function Learn()
        },
        {
         letter: "D",
-        practice: false,
+        practice: true,
         message: "Index finger points up while the other fingertips meet the thumb. Think of a tall pointer above a small circle.",
         
        },
        {
         letter: "E",
-        practice: false,
+        practice: true,
          message: "Fingertips fold toward the palm with the thumb tucked in front. Keep the hand compact instead of flattening it into an open shape.",
        
        },
@@ -43,31 +43,31 @@ function Learn()
        },  
        {
         letter: "G",
-        practice: false,
+        practice: true,
         message: "Index finger and thumb extend sideways in parallel, close together. Keep the hand horizontal instead of letting it tilt down.",
        
        },
        {
         letter: "H",
-        practice: false,
+        practice: true,
         message: "Index and middle fingers extend together sideways, other fingers folded. Keep the two extended fingers aligned rather than splitting into V.",
 
        },
        {
         letter: "I",
-        practice: false,
+        practice: true,
         message: "Pinky points up while the other fingers stay in a fist. Show one clear pinky line and keep the rest of the hand compact.",
 
        },
        {
         letter: "J",
-        practice: false,
+        practice: true,
         message: "MOTION: Starts like I, then the pinky traces a J shape in the air. The path matters more than the starting pose.",
    
        },
        {
         letter: "K",
-        practice: false,
+        practice: true,
         message: "Index and middle fingers point up in a V while the thumb rests between them. Keep the hand upright so it does not drift into P.",
 
        },
@@ -85,7 +85,7 @@ function Learn()
        },
        {
         letter: "N",
-        practice: false,
+        practice: true,
         message: "Two fingers fold over the thumb with the palm angled down or forward. Count two fingers over the thumb, not three like M.",
  
        },
@@ -103,13 +103,13 @@ function Learn()
        },
        {
         letter: "Q",
-        practice: false,
+        practice: true,
         message: "Same base handshape as G, but the fingers point downward. Let the direction do the work; the tilt is the key difference.",
 
        },
        {
         letter: "R",
-        practice: false,
+        practice: true,
         message: "Index and middle fingers cross (middle over index) while pointing up. Keep the crossed fingers clear and avoid flattening into U.",
 
        },
@@ -121,7 +121,7 @@ function Learn()
        },
        {
         letter: "T",
-        practice: false,
+        practice: true,
         message: "Thumb sits between the index and middle finger in a fist. Only a small part of the thumb should show.",
 
        },
@@ -139,7 +139,7 @@ function Learn()
        },
        {
         letter: "W",
-        practice: false,
+        practice: true,
         message: "Index, middle, and ring-3 fingers spread upward. Use three clear points and keep the thumb folded.",
     
        },
@@ -178,13 +178,15 @@ function Learn()
 
     <main>
         <NavBar/>
-        
-        <div class="learn-title">
-        <h1>LEARN</h1>
-        <p>TIP: Try to comfortably make your palm face the person you're signing to !</p>
-        
 
-        <p>Click a card to read more detailed descriptions !!</p>
+        <div className="learn-title">
+                <h1>LEARN</h1>
+                
+        
+            <div className="learn-tips-box">
+                <p>TIP: Try to comfortably make your palm face the person you're signing to!</p>
+                <p>Click a card to read more detailed descriptions!</p>
+            </div>
         </div>
 
         {/* cards for each letter */}
