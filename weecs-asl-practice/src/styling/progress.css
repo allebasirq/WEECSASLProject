@@ -1,3 +1,10 @@
+
+/* TITLE */
+.progress-title {
+  font-family: Chalkboard SE;
+}
+
+
 .progress-page {
   width: 100%;
   margin: 0 auto;
@@ -6,10 +13,29 @@
 
 .progress-page > h1,
 .progress-page > p,
-.progress-page > button,
-.progress-page > div {
+.progress-page > button {
   margin: 1.5rem;
 }
+
+/* DESCRIPTION BOX */
+.progress-description {
+    background-color: white;
+    border: 2px solid #eeeeee;
+    border-radius: 10px;
+    padding: 15px 20px;
+    width: 700px;
+    max-width: 90%;
+    box-sizing: border-box;
+    margin: 0 auto 20px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+    font-size: 19px;
+    text-align: center;
+}
+
+.progress-description p {
+    margin: 8px 0;
+}
+
 
 .progress-sessions {
   display: grid;
@@ -19,15 +45,34 @@
 }
 
 .progress-sessions li {
-  border: 2px solid #b1bffd;
+  background-color: white;
+  border: none;
   border-radius: 0.75rem;
   padding: 1rem 1.5rem;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
 }
+
 
 .progress-sessions h2 {
   margin-top: 0;
 }
 
+
 .progress-page button {
-  margin-right: 0.75rem;
+    margin-right: 0.75rem;
+    font-family: Chalkboard SE;
+    padding: 10px 20px;
+    font-size: 18px;
+    border-radius: 8px;
+    min-width: 150px;
+    cursor: pointer;
+    border: none;
+    background-color: #4562ab;
+    color: white;
+    box-shadow: 0 1px 15px rgba(0, 0, 0, 0.25);
+    transition: background-color 0.2s ease;
+}
+
+.progress-page button:hover {
+    background-color: #244085;
 }

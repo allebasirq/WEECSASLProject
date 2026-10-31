@@ -136,6 +136,7 @@
 
 /* BLUE BUTTON STYLING */
 button {
+    font-family: Chalkboard SE;
     background-color: #4562ab;
     color: white;
     border: none;
@@ -207,6 +208,7 @@ button:active {
 
 /* CAMERA STATUS CARD */
 .camera-status {
+    
     width: 200px;
     min-height: 25px;
     background-color: white;

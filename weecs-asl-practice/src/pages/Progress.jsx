@@ -19,12 +19,22 @@ function Progress() {
   return (
     <main className="progress-page">
       <NavBar />
-      <h1>Progress</h1>
+      <h1 className="progress-title">Progress</h1>
+
       {progress.ok ? (
         <>
-          <p>{progress.sessions.length} completed practice session(s) saved.</p>
+          <div className="progress-description">
+            <p>
+              {progress.sessions.length} completed practice session(s) saved.
+            </p>
           {progress.sessions.length === 0 ? (
+            
             <p>Complete a practice session to see your results here.</p>
+          ): null}
+        </div>
+
+        {progress.sessions.length === 0 ? (
+            <></>
           ) : (
             <ol className="progress-sessions">
               {progress.sessions.map(session => (
