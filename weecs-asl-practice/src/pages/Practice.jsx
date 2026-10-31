@@ -104,48 +104,67 @@ function Practice() {
   }
 
   return (
-    <main>
-      <NavBar />
-      <h1 className="asl-title">ASL Practice</h1>
-      <LetterPrompt letter={gameState.currentLetter} />
-      <Webcam
-        onPrediction={({ letter, timestamp }) => processPrediction(letter, timestamp)}
-      />
+  <main>
+    <NavBar />
+    <h1 className="asl-title">ASL Practice</h1>
 
-      <ScoreBoard
-        score={gameState.score}
-        streak={gameState.streak}
-        round={gameState.currentRound}
-        totalRounds={gameState.totalRounds}
-        feedback={gameState.recognizedLetter ?? 'None'}
-        roundCompleted={gameState.status === 'completed'}
-      />
+    <div className="practice-layout">
+      {/* Left: Scoreboard */}
+      <div className="scoreboard-side">
+        <ScoreBoard
+          score={gameState.score}
+          streak={gameState.streak}
+          round={gameState.currentRound}
+          totalRounds={gameState.totalRounds}
+          feedback={gameState.recognizedLetter ?? 'None'}
+          roundCompleted={gameState.status === 'completed'}
+        />
+      </div>
 
-      {gameState.status !== 'active' && gameState.status !== 'paused' && (
-        <button type="button" onClick={startGame}>
-          Start
-        </button>
-      )}
-      {gameState.status === 'active' && (
-        <>
-          <button type="button" onClick={pauseGame}>Pause</button>
-          <button type="button" onClick={skipRound}>Skip</button>
-          {gameState.roundCompleted && (
-            <button type="button" onClick={nextRound}>Next</button>
-          )}
-          <button type="button" onClick={endGame}>End</button>
-        </>
-      )}
-      {gameState.status === 'paused' && (
-        <>
-          <button type="button" onClick={resumeGame}>Resume</button>
-          <button type="button" onClick={endGame}>End</button>
-        </>
-      )}
+      {/* Middle: Letter prompt and webcam */}
+      <div className="webcam-side">
+        <LetterPrompt letter={gameState.currentLetter} />
 
-      {storageMessage && <p role="alert">{storageMessage}</p>}
-    </main>
-  )
+        <Webcam
+          onPrediction={({ letter, timestamp }) =>
+            processPrediction(letter, timestamp)
+          }
+        />
+      </div>
+
+      {/* Right: Game controls */}
+      <div className="game-controls-side">
+        {gameState.status !== 'active' && gameState.status !== 'paused' && (
+          <button type="button" onClick={startGame}>
+            Start
+          </button>
+        )}
+
+        {gameState.status === 'active' && (
+          <>
+            <button type="button" onClick={pauseGame}>Pause</button>
+            <button type="button" onClick={skipRound}>Skip</button>
+
+            {gameState.roundCompleted && (
+              <button type="button" onClick={nextRound}>Next</button>
+            )}
+
+            <button type="button" onClick={endGame}>End</button>
+          </>
+        )}
+
+        {gameState.status === 'paused' && (
+          <>
+            <button type="button" onClick={resumeGame}>Resume</button>
+            <button type="button" onClick={endGame}>End</button>
+          </>
+        )}
+      </div>
+    </div>
+
+    {/* Storage message */}
+    {storageMessage && <p role="alert">{storageMessage}</p>}
+  </main>
+)
 }
-
 export default Practice
