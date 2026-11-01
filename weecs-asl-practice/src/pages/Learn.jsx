@@ -115,7 +115,7 @@ function Learn()
        },
        {
         letter: "S",
-        practice: false,
+        practice: true,
         message: "Tight fist with the thumb crossing in front of the fingers. The thumb should stay across the front, not tucked away.",
 
        },
@@ -127,7 +127,7 @@ function Learn()
        },
        {
         letter: "U",
-        practice: false,
+        practice: true,
         message: "Index and middle fingers point up together, side by side. Keep the two fingers close together instead of splitting them apart.",
 
        },
@@ -145,7 +145,7 @@ function Learn()
        },
        {
         letter: "X",
-        practice: false,
+        practice: true,
           message: "Index finger bends into a hook while the rest of the hand stays in a fist. The hooked index finger is the whole signal; keep it obvious.",
       
        },

@@ -146,9 +146,9 @@ function Practice() {
             <button type="button" onClick={skipRound}>Skip</button>
 
             {gameState.roundCompleted && (
-              <button type="button" onClick={nextRound}>Next</button>
+              <button type="button" id = "next-button" onClick={nextRound}>Next</button>
             )}
-
+            
             <button type="button" onClick={endGame}>End</button>
           </>
         )}

@@ -270,6 +270,11 @@ button:active {
     box-shadow: 0 1px 15px rgba(0, 0, 0, 0.25);
 }
 
+#next-button
+{
+    background-color: #0020b1;
+}
+
 /* SMALLER SCREENS ADJUST WHEN WEBPAGE IS SMALLER */
 @media (max-width: 1150px) {
     .practice-layout {
@@ -290,5 +295,7 @@ button:active {
         justify-content: center;
     }
 }
+
+
 
 /* PRACTICE PAGE LAYOUT END */

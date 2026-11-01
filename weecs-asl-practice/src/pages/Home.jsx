@@ -15,17 +15,32 @@ const letters = Object.entries(letterModules)
     .map(([path, url]) => ({ url, name: path.split('/').pop().split('.')[0] }));
   
 
+function pickRandom(n) {
+    const arr = [...letters];
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr.slice(0, n);
+}
+
 function Home()
 {
 
-    const [flash, setFlash] = useState(0);
 
-    useEffect(() => {
+    const [round, setRound] = useState(0);
+    const [shown, setShown] = useState(() => pickRandom(3));
+
+
+     useEffect(() => {
         const id = setInterval(() => {
-            setFlash((prev) => (prev + 1) % letters.length);
-        }, 6000);
+            setShown(pickRandom(3));
+            setRound((r) => r + 1);
+
+        }, 4000);
         return () => clearInterval(id);
     }, []);
+
 
    return(
 
@@ -36,13 +51,16 @@ function Home()
         <h1 id="home-title">Welcome To [project name]</h1>
 
         <div id="description">
-            <div className="image-box">
-                <img
-                    key={flash}
-                    src={letters[flash].url}
-                    alt={`ASL sign for ${letters[flash].name}`}
-                />
-            </div>
+             <div className="image-row">
+                        {shown.map((letter) => (
+                            <div className="image-box" key={`${round}-${letter.name}`}>
+                                <img
+                                    src={letter.url}
+                                    alt={`ASL sign for ${letter.name}`}
+                                />
+                            </div>
+                        ))}
+                    </div>
             <p id="home-stars">✦✦✦</p>
             <p id="description-text">[namename] can help you learn ASL in a fun and immersive way. 
                 Click learn and check out various tips and tricks to signing the alphabet.
