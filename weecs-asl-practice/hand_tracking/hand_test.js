@@ -65,6 +65,7 @@ export function processResult(result, timestamp) {
   const handedness = hand.displayName;
 
   // Name: (none = not a recognized sign, empty string = error with dataset, but treat the same as none)
+  // M, P, and Z not included
   const resultObject = {categoryName, categoryScore, handedness, timestamp};
   const resultString = JSON.stringify(resultObject); // this is the JSON string that contains the result data
 
