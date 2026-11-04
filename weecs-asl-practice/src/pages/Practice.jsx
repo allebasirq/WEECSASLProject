@@ -123,7 +123,7 @@ function Practice() {
 
       {/* Middle: Letter prompt and webcam */}
       <div className="webcam-side">
-        <LetterPrompt letter={gameState.currentLetter} />
+        <LetterPrompt letter={gameState.currentLetter} gameState={gameState} />
 
         <Webcam
           onPrediction={({ letter, timestamp }) =>

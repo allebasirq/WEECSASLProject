@@ -85,7 +85,32 @@ body
 
 /* TITLE BOX */
 
+.bigger-container
+{
+   display: flex;
+    flex-direction: row;
+    margin-right: 2%;
+    gap: 2%;
+    margin-left: 2%;
+    
 
+}
+
+.references
+{
+    margin-top: 35px;
+    align-self: flex-start;   /* stops it stretching to match the left card's height */
+    width: 260px;             /* or max-width: 20% */
+    padding: 100px;
+    background: #d4e2ff;      /* match your card color */
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    text-align: left;
+        box-shadow: 0 2px 20px rgba(0, 0, 0, 0.25);
+    border: 2px rgb(183, 181, 181) solid;
+          font-family: Chalkboard SE;
+
+}
 /* DESCRIPTION BOX */
 #description
 {
