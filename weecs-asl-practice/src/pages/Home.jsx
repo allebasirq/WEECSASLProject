@@ -49,7 +49,7 @@ function Home()
         
     <div class="bigger-container">
         <div class = "home-container">
-        <h1 id="home-title">Welcome To WEECS ASL</h1>
+        <h1 id="home-title">Welcome To ASL Trainer</h1>
 
         <div id="description">
              <div className="image-row">
@@ -63,7 +63,7 @@ function Home()
                         ))}
                     </div>
             <p id="home-stars">✦✦✦</p>
-            <p id="description-text">WEECS ASL can help you learn ASL in a fun and immersive way. 
+            <p id="description-text">ASL Trainer can help you learn ASL in a fun and immersive way. 
                 Click learn and check out various tips and tricks to signing the alphabet.
                 Hit the practice button once you feel ready to test yourself.
             </p>
