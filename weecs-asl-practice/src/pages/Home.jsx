@@ -79,11 +79,11 @@ function Home()
         <div class = "references">
             <h2>References</h2>
             <p>Want to learn more? Feel free to check out the references used below</p>
-            <ul>
-                <li>pic</li>
-                <li>tips</li>
-                <li>training</li>
-                <li>dataset</li>
+            <ul className="references-links">
+                <li><a href="https://www.lifeprint.com/asl101/pages-layout/fingerspelling.htm" target="_blank" rel="noopener noreferrer">Letter Pictures</a></li>
+                <li><a href="https://www.anysign.app/en/asl-alphabet" target="_blank" rel="noopener noreferrer">Letter Tips/Guide</a></li>
+                <li><a href="https://www.kaggle.com/datasets/signnteam/asl-sign-language-pictures-minus-j-z" target="_blank" rel="noopener noreferrer">Training Datasets (1)</a></li>
+                <li><a href="https://data.mendeley.com/datasets/j4y5w2c8w9/1" target="_blank" rel="noopener noreferrer">Training Datasets (2)</a></li>
             </ul>
         </div>
     </div>

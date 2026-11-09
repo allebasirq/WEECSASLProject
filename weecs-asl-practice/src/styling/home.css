@@ -166,3 +166,28 @@ body
   color: white;
 }
 
+
+
+.references-links
+{
+  list-style: none;
+  justify-content: left;
+  background-color: #f2f6ff;
+  border-radius: 20px;
+  padding: 20px 40px;
+  margin-top: 20px;
+ 
+}
+.references-links a
+{
+  color: #516995;
+  text-decoration: none;
+    font-family: Chalkboard SE;
+
+}
+
+.references-links a:hover
+{
+  color: #061328;
+  text-decoration: none
+}
